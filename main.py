@@ -3,6 +3,7 @@ import time
 import json
 import os
 import base64
+import psutil
 from dotenv import load_dotenv
 
 
@@ -32,6 +33,23 @@ STEELSERIES_URL = "http://" + coreProps["address"]
 GAME_NAME = "MY_SPOTIFY_APP_ANCAVI"
 
 headers = {"Content-Type": "application/json"}
+
+
+def stop_game():
+    """Elimina el juego de la pantalla de SteelSeries Engine."""
+    payload = {"game": GAME_NAME}
+    response = requests.post(
+        STEELSERIES_URL + "/stop_game", json=payload, headers=headers
+    )
+    print(f"Stop Game Response: {response.status_code} - {response.text}")
+
+
+def is_spotify_running():
+    """Verifica si Spotify sigue en ejecución."""
+    for process in psutil.process_iter(["name"]):
+        if process.info["name"] and "Spotify.exe" in process.info["name"]:
+            return True
+    return False
 
 
 def refresh_access_token():
@@ -175,10 +193,13 @@ def update_display(text):
 def main():
     register_game()
     register_event()
-    while True:
+    while is_spotify_running():  # Solo ejecuta mientras Spotify esté abierto
         now_playing = get_spotify_now_playing()
         update_display(now_playing)
-        time.sleep(0.5)  # Actualiza cada 5 segundos
+        time.sleep(0.5)  # Actualiza cada 0.5 segundos
+
+    print("Spotify se ha cerrado. Finalizando script.")
+    stop_game()
 
 
 if __name__ == "__main__":
