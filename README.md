@@ -4,6 +4,9 @@
 
 - Reproductor en pantalla para auriculares Steel Series nova pro
 
+### Descargar exe
+[Descargar ejecutable](https://drive.google.com/file/d/1VK8njvNeN2Yflqk6NW9aU3VQhOxb0Unt/view?usp=drive_link)
+
 ## Instrucciones
 
 > Para poder hacer funcionar esta aplicación, necesitarás crear una API en spotify. Por seguridad no he añadido este proceso en el repositorio. Para saber que necesiotas exactamente, mira las variables en el código (son bastantes descriptibas).

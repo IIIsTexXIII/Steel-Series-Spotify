@@ -3,3 +3,6 @@ codigo.py
 venv
 .gitignore
 .gitattributes
+build
+dist
+SpotifyMonitor.spec
